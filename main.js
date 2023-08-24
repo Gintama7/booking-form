@@ -13,10 +13,14 @@ form.addEventListener('submit',function(e){
 
     const newUser = {name,email,phone};
     const users = JSON.stringify(newUser);
-    localStorage.setItem("user",users);
+    localStorage.setItem(newUser.email,users);
+    showUser(newUser);
+    })
 
+function showUser(newUser)
+{
     let listItem  = document.createElement('li');
-    listItem.textContent = `${name} - ${email} - ${phone}`;
+    listItem.textContent = `${newUser.name} - ${newUser.email} - ${newUser.phone}`;
     userList.appendChild(listItem);
 
     nameInput.value= "";
@@ -27,14 +31,10 @@ form.addEventListener('submit',function(e){
 
     delBtn.appendChild(document.createTextNode('delete'));
     listItem.appendChild(delBtn);
-})
 
-userList.addEventListener('click',function(e){
-    if(e.target.classList.contains('delete'))
-    {
-        let li = e.target.parentElement;
-        userList.removeChild(li);
-        localStorage.removeItem("user");
-     }
+    delBtn.onclick=()=>{
+        localStorage.removeItem(newUser.email);
+        userList.removeChild(listItem);
+    }
 
-})
+}
