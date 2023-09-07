@@ -4,10 +4,6 @@ let emailInput = document.querySelector('[name="email"]');
 let phoneInput = document.querySelector('[name="phone"]');
 let userList = document.getElementById('userlist');
 
-// axios.get('https://crudcrud.com/api/b910a46c8c7245f98e0d30a715dcc648/appointmentData')
-// .then((res)=>{
-//  showUser(res.data);
-// })
 
 form.addEventListener('submit',function(e){
     e.preventDefault();
@@ -33,6 +29,20 @@ form.addEventListener('submit',function(e){
 
     // localStorage.setItem(newUser.email,users);   //using local storage
     // showUser(newUser);
+    })
+
+    window.addEventListener("DOMContentLoaded",() =>{
+        axios
+          .get("https://crudcrud.com/api/b910a46c8c7245f98e0d30a715dcc648/appointmentData")
+          .then((res) => {
+           console.log(res);
+
+           for(let i=0;i<res.data.length;i++)
+           {
+            showUser(res.data[i]);
+           }
+
+          }).catch(err => console.log(err));
     })
 
 function showUser(newUser)
