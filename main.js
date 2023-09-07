@@ -60,8 +60,27 @@ function showUser(newUser)
     delBtn.appendChild(document.createTextNode('delete'));
     listItem.appendChild(delBtn);
 
-    delBtn.onclick=()=>{
-        localStorage.removeItem(newUser.email);
+    delBtn.onclick=(e)=>{
+        e.preventDefault();
+        let id = '';
+        axios
+        .get("https://crudcrud.com/api/b910a46c8c7245f98e0d30a715dcc648/appointmentData")
+        .then((res) => {
+         for(let i=0;i<res.data.length;i++)
+         {
+          if(newUser.email === res.data[i].email)
+          {
+            id= res.data[i]._id;
+            console.log(id);
+          }
+         }
+         axios.delete(`https://crudcrud.com/api/b910a46c8c7245f98e0d30a715dcc648/appointmentData/${id}`)
+        .then(res => console.log('deleted item'))
+        .catch(err=> console.log(err));
+        }).catch(err=> console.log(err));
+
+        
+        // localStorage.removeItem(newUser.email);
         userList.removeChild(listItem);
     }
 
